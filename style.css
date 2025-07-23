@@ -34,30 +34,41 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 .tile {
-  display: inline-block;
-  padding: 15px 25px;
-  margin: 10px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
   margin: 20px 0;
-
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+ 
 }
 .tile.red { background-color: #e74c3c; }
 .tile.green { background-color: #2ecc71; }
 .tile.yellow { background-color: #f1c40f; color: #000; }
+.quick-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
 .quick-actions button {
-  margin: 5px;
-  padding: 10px 15px;
+  padding: 12px 20px;
+  font-size: 16px;
   border: none;
-  border-radius: 5px;
-  background-color: #007bff;
+  border-radius: 6px;
+  background-color: #007BFF;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quick-actions button:hover {
+  background-color: #0056b3;
 }
 table {
   width: 100%;
@@ -101,26 +112,5 @@ th, td {
   background-color: #0056b3;
 }
 
-.quick-actions {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
 
-.quick-actions button {
-  padding: 12px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #007BFF;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.quick-actions button:hover {
-  background-color: #0056b3;
-}
 
