@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transaction Monitoring</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .high { background-color: #f8d7da; }
+    .medium-risk { background-color: #fff3cd; }
+    .low-risk { background-color: #d1ecf1; }
+    .safe { background-color: #d4edda; }
+    form { margin: 20px 0; }
+    input, button { margin: 5px; }
+  </style>
+</head>
+<body>
+  <div class="navbar">Wire Transaction Monitoring and Vendor Evaluation Hub</div>
+  <div class="nav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="transaction_monitoring.html">Transaction Monitoring</a>
+    <a href="reporting_workflow.html">Reporting Workflow</a>
+    <a href="vendor_evaluation.html">Vendor Evaluation</a>
+  </div>
+
+  <div class="section">
+    <h2>Transaction Monitoring</h2>
+
+    <!-- Form to add new transaction -->
+    <form id="transactionForm">
+      <input type="date" id="date" required>
+      <input type="number" id="amount" placeholder="Amount (USD)" required>
+      <input type="text" id="sender" placeholder="Sender" required>
+      <input type="text" id="receiver" placeholder="Receiver" required>
+      <button type="submit">Add Transaction</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th><th>Amount</th><th>Sender</th><th>Receiver</th><th>Risk Score</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="transactionTable">
+        <tr class="high-risk"><td>2020-01-22</td><td>$4,000,000.00</td><td>Wells Fargo</td><td>Santander Bank Mexico</td><td>Severe</td><td><button>Details</button></td></tr>
+        <tr class="high-risk"><td>2022-07-01</td><td>$1,304,000.00</td><td>Wells Fargo Bank</td><td>Wells Fargo Bank</td><td>Severe</td><td><button title="Suspicious pattern detected">Details</button></td></tr>
+        <tr class="safe"><td>2023-01-09</td><td>$80,000.00</td><td>National Bank of Arizona</td><td>Chase</td><td>Insignificant</td><td><button title="Unusual destination account">Details</button> </td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('transactionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const date = document.getElementById('date').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const sender = document.getElementById('sender').value;
+      const receiver = document.getElementById('receiver').value;
+
+      let risk = '';
+      let rowClass = '';
+
+      if (amount < 125000) {
+        risk = 'Insignificant';
+        rowClass = 'safe';
+      } else if (amount < 250000) {
+        risk = 'Minor';
+        rowClass = 'low-risk';
+      } else if (amount < 500000) {
+        risk = 'Moderate';
+        rowClass = 'medium-risk';
+      } else if (amount < 1000000) {
+        risk = 'Major';
+        rowClass = 'high-risk';
+      } else {
+        risk = 'Severe';
+        rowClass = 'high-risk';
+      }
+
+      const newRow = `
+        <tr class="${rowClass}">
+          <td>${date}</td>
+          <td>$${amount.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          <td>${sender}</td>
+          <td>${receiver}</td>
+          <td>${risk}</td>
+          <td><button>Details</button></td>
+        </tr>
+      `;
+
+      document.getElementById('transactionTable').insertAdjacentHTML('beforeend', newRow);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
