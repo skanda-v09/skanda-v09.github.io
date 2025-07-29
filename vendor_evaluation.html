@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Vendor Evaluation</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .form-group { margin-bottom: 1em; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  </style>
 </head>
 <body>
   <div class="navbar">Wire Transaction Monitoring and Vendor Evaluation Hub</div>
@@ -13,82 +18,83 @@
     <a href="reporting_workflow.html">Reporting Workflow</a>
     <a href="vendor_evaluation.html">Vendor Evaluation</a>
   </div>
+
   <div class="section">
     <h2>Vendor Evaluation</h2>
     <form onsubmit="scoreVendor(); return false;">
       <div class="form-group">
-        <label for="id_verification">Identity Verification (KYB, KYC, Credit Data)</label>
-        <select id="id_verification">
-          <option>Complete</option>
-          <option>Incomplete</option>
-        </select>
+        <label for="capability_score">Enter Capability Score (0–21, decimals allowed)</label>
+        <input type="number" id="capability_score" min="0" max="21" step="0.01" required />
       </div>
+
       <div class="form-group">
-        <label for="id_authentication">Identity Authentication (MFA-OTP, Biometrics, Geolocation)</label>
-        <select id="id_authentication">
-          <option>Strong</option>
-          <option>Moderate</option>
-          <option>Weak</option>
+        <label for="price_tier">Price Tier</label>
+        <select id="price_tier">
+          <option value="1">$ (Least Expensive)</option>
+          <option value="2">$$ (Mid Range)</option>
+          <option value="3">$$$ (Most Expensive)</option>
         </select>
       </div>
+
       <div class="form-group">
-        <label for="bank_validation">Bank Account Validation (Account Validation, Account Activity Analysis)</label>
-        <select id="bank_validation">
-          <option>Verified</option>
-          <option>Unverified</option>
+        <label for="quality_score">Quality Score</label>
+        <select id="quality_score">
+          <option value="1">1 (Low)</option>
+          <option value="2">2 (Mixed)</option>
+          <option value="3">3 (High)</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="case_management">Case Management</label>
-        <select id="case_management">
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-      </div>
-      <button type="submit" class="btn">Score Vendor</button> 
+
+      <button type="submit" class="btn">Score Vendor</button>
     </form>
-    <p id="vendor_score_output" class="mt-3">Vendor Score: <strong>A+</strong>
+
+    <p id="vendor_score_output" class="mt-3">Vendor Score: <strong>N/A</strong></p>
+
+    <h3>Capabilities Reference Table</h3>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Capability</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>KYB</td></tr>
+        <tr><td>2</td><td>KYC</td></tr>
+        <tr><td>3</td><td>Email Verification</td></tr>
+        <tr><td>4</td><td>Social/Adverse Media Coverage</td></tr>
+        <tr><td>5</td><td>Government ID</td></tr>
+        <tr><td>6</td><td>Credit Data</td></tr>
+        <tr><td>7</td><td>Phone Data</td></tr>
+        <tr><td>8</td><td>MFA-OTP</td></tr>
+        <tr><td>9</td><td>Secure MFA - Link Driven</td></tr>
+        <tr><td>10</td><td>Dynamic KBA</td></tr>
+        <tr><td>11</td><td>Behavioral Biometrics</td></tr>
+        <tr><td>12</td><td>Geolocation</td></tr>
+        <tr><td>13</td><td>Driver's License with Selfie</td></tr>
+        <tr><td>14</td><td>Business Account Validation</td></tr>
+        <tr><td>15</td><td>Personal Account Validation</td></tr>
+        <tr><td>16</td><td>Payment Rail Connectivity</td></tr>
+        <tr><td>17</td><td>Account Balance</td></tr>
+        <tr><td>18</td><td>Account Activity Analysis</td></tr>
+        <tr><td>19</td><td>Transaction & Data Monitoring</td></tr>
+        <tr><td>20</td><td>Rules Engine</td></tr>
+        <tr><td>21</td><td>Case Management</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
     function scoreVendor() {
-      const idVerification = document.getElementById("id_verification").value;
-      const idAuthentication = document.getElementById("id_authentication").value;
-      const bankValidation = document.getElementById("bank_validation").value;
-      const caseManagement = document.getElementById("case_management").value;
+      const capability = parseFloat(document.getElementById("capability_score").value);
+      const price = parseInt(document.getElementById("price_tier").value);
+      const quality = parseInt(document.getElementById("quality_score").value);
 
-      const key = `${idVerification}|${idAuthentication}|${bankValidation}|${caseManagement}`;
+      if (isNaN(capability) || capability < 0 || capability > 21) {
+        alert("Capability score must be a number between 0 and 21.");
+        return;
+      }
 
-      const gradingKey = {
-        "Complete|Strong|Verified|Yes": "A+",
-        "Complete|Strong|Verified|No": "A",
-        "Complete|Strong|Unverified|Yes": "B+",
-        "Complete|Strong|Unverified|No": "B",
-        "Complete|Moderate|Verified|Yes": "B+",
-        "Complete|Moderate|Verified|No": "B",
-        "Complete|Moderate|Unverified|Yes": "C+",
-        "Complete|Moderate|Unverified|No": "C",
-        "Complete|Weak|Verified|Yes": "C+",
-        "Complete|Weak|Verified|No": "C",
-        "Complete|Weak|Unverified|Yes": "D+",
-        "Complete|Weak|Unverified|No": "D",
-        "Incomplete|Strong|Verified|Yes": "C+",
-        "Incomplete|Strong|Verified|No": "C",
-        "Incomplete|Strong|Unverified|Yes": "D+",
-        "Incomplete|Strong|Unverified|No": "D",
-        "Incomplete|Moderate|Verified|Yes": "D+",
-        "Incomplete|Moderate|Verified|No": "D",
-        "Incomplete|Moderate|Unverified|Yes": "D",
-        "Incomplete|Moderate|Unverified|No": "D",
-        "Incomplete|Weak|Verified|Yes": "D",
-        "Incomplete|Weak|Verified|No": "D",
-        "Incomplete|Weak|Unverified|Yes": "D",
-        "Incomplete|Weak|Unverified|No": "F"
-      };
-
-      const grade = gradingKey[key] || "N/A";
+      const finalScore = (price * 0.25) + (capability * 0.50) + (quality * 0.25);
       const output = document.getElementById("vendor_score_output");
-      output.innerHTML = `Vendor Score: <strong>${grade}</strong>`;
+      output.innerHTML = `Vendor Score: <strong>${finalScore.toFixed(1)}</strong>`;
     }
   </script>
 </body>
