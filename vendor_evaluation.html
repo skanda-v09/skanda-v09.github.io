@@ -8,11 +8,6 @@
     .form-group { margin-bottom: 1em; }
     table { border-collapse: collapse; width: 100%; margin-top: 1em; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    .navbar { font-weight: bold; padding: 1em; background-color: #aff806; }
-    .nav a { margin-right: 1em; text-decoration: none; }
-    .section { padding: 1em; }
-    .btn { padding: 0.5em 1em; }
-    .mt-3 { margin-top: 1em; }
   </style>
 </head>
 <body>
@@ -35,9 +30,9 @@
       <div class="form-group">
         <label for="price_tier">Price Tier</label>
         <select id="price_tier">
-          <option value="3">$ (Least Expensive)</option>
+          <option value="1">$ (Least Expensive)</option>
           <option value="2">$$ (Mid Range)</option>
-          <option value="1">$$$ (Most Expensive)</option>
+          <option value="3">$$$ (Most Expensive)</option>
         </select>
       </div>
 
@@ -54,31 +49,6 @@
     </form>
 
     <p id="vendor_score_output" class="mt-3">Vendor Score: <strong>N/A</strong></p>
-
-    <h3>Vendor Score Interpretation</h3>
-    <p>This ranking is based on our sample of 21 vendors.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Score Range</th>
-          <th>Recommendation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0.0 – 7.0</td>
-          <td>Not Recommended</td>
-        </tr>
-        <tr>
-          <td>7.1 – 8.9</td>
-          <td>Moderate</td>
-        </tr>
-        <tr>
-          <td>9.0 and above</td>
-          <td>Recommended</td>
-        </tr>
-      </tbody>
-    </table>
 
     <h3>Capabilities Reference Table</h3>
     <table>
